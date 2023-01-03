@@ -1,11 +1,14 @@
 const express = require('express');
 const cors = require('cors');
+const { dbConnection } = require('../database/config');
 
 class Server {
     constructor() {
         this.app = express();
         this.PORT = process.env.PORT;
         this.userPath = '/api/v1/users';
+        //connecting DB
+        this.connectDB();
         //middlewares
         this.middlewares();
         //routes app
@@ -19,6 +22,10 @@ class Server {
         this.app.use(express.json());
         //PUBLIC DIRECTORY
         this.app.use(express.static('public'));
+    }
+
+    async connectDB() {
+        await dbConnection();
     }
 
     routes() {
