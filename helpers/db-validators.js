@@ -14,7 +14,16 @@ const emailIsAlreadyUsed = async (email) => {
         throw new Error(`the email: "${email}" is already used`);
     }
 };
+
+const userByIdExist = async (id) => {
+    const userExist = await User.findById(id);
+    if (!userExist) {
+        throw new Error(`the user not exist`);
+    }
+};
+
 module.exports = {
     isRoleValid,
-    emailIsAlreadyUsed
+    emailIsAlreadyUsed,
+    userByIdExist
 };

@@ -10,7 +10,8 @@ const {
     patchUser,
     deleteUser
 } = require('../controllers/users.controller');
-const { isRoleValid, emailIsAlreadyUsed } = require('../helpers/db-validators');
+
+const { isRoleValid, emailIsAlreadyUsed, userByIdExist } = require('../helpers/db-validators');
 const { validateFields } = require('../middlewares/validate-fields');
 
 router.get('/', getUser);
@@ -26,8 +27,25 @@ router.post(
     ],
     postUser
 );
-router.put('/', putUser);
+router.put(
+    '/:id',
+    [
+        check('id', 'the id is invalid').isMongoId(),
+        check('id').custom(userByIdExist),
+        check('role', 'the role is required').custom(isRoleValid),
+        validateFields
+    ],
+    putUser
+);
 router.patch('/', patchUser);
-router.delete('/', deleteUser);
+router.delete(
+    '/:id',
+    [
+        check('id', 'the id is invalid').isMongoId(),
+        check('id').custom(userByIdExist),
+        validateFields
+    ],
+    deleteUser
+);
 
 module.exports = router;
