@@ -3,10 +3,6 @@ const { check } = require('express-validator');
 
 const router = Router();
 
-/* const { validateFields } = require('../middlewares/validate-fields');
-const { validateJWT } = require('../middlewares/validate-jwt');
-const { isAdminRole, haveRole } = require('../middlewares/validate-role'); */
-
 const { validateFields, validateJWT, haveRole, isAdminRole } = require('../middlewares');
 
 const {
