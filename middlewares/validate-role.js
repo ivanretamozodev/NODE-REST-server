@@ -10,7 +10,7 @@ const isAdminRole = async (req = request, res = response, next) => {
     const { name, role } = req.user;
 
     if (role !== 'ADMIN_ROLE') {
-        res.status(401).json({
+        return res.status(401).json({
             message: `${name}, is not admin`
         });
     }
@@ -20,7 +20,17 @@ const isAdminRole = async (req = request, res = response, next) => {
 
 const haveRole = (...roles) => {
     return (req, res, next) => {
-        console.log(roles, req.user.role);
+        if (!req.user) {
+            return res.status(500).json({
+                message: 'talk with admin'
+            });
+        }
+
+        if (!roles.includes(req.user.role)) {
+            return res.status(401).json({
+                message: `the service requires one of these roles: ${roles}`
+            });
+        }
         next();
     };
 };
