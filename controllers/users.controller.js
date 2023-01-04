@@ -48,9 +48,7 @@ const patchUser = (req, res = response) => {
 
 const deleteUser = async (req, res = response) => {
     const { id } = req.params;
-
     const user = await User.findByIdAndUpdate(id, { status: false });
-
     res.json(user);
 };
 
