@@ -40,12 +40,6 @@ const putUser = async (req, res = response) => {
     res.json(user);
 };
 
-const patchUser = (req, res = response) => {
-    res.json({
-        message: 'patch - API'
-    });
-};
-
 const deleteUser = async (req, res = response) => {
     const { id } = req.params;
     const user = await User.findByIdAndUpdate(id, { status: false });
@@ -56,6 +50,5 @@ module.exports = {
     getUser,
     postUser,
     putUser,
-    patchUser,
     deleteUser
 };
