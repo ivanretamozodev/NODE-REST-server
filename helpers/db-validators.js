@@ -34,10 +34,19 @@ const productIdExist = async (id) => {
     }
 };
 
+const validColections = (colection = '', colections = []) => {
+    const included = colections.includes(colection);
+    if (!included) {
+        throw new Error('collection not included');
+    }
+    return true;
+};
+
 module.exports = {
     isRoleValid,
     emailIsAlreadyUsed,
     userByIdExist,
     CategoryIdExist,
-    productIdExist
+    productIdExist,
+    validColections
 };
