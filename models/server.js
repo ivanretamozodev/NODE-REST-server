@@ -10,7 +10,8 @@ class Server {
             auth: '/api/v1/auth',
             users: '/api/v1/users',
             categories: '/api/v1/categories',
-            products: '/api/v1/products'
+            products: '/api/v1/products',
+            search: '/api/v1/search'
         };
         //connecting DB
         this.connectDB();
@@ -38,6 +39,7 @@ class Server {
         this.app.use(this.paths.auth, require('../routes/auth.routes'));
         this.app.use(this.paths.categories, require('../routes/categories.routes'));
         this.app.use(this.paths.products, require('../routes/products.routes'));
+        this.app.use(this.paths.search, require('../routes/search.routes'));
     }
 
     listen() {
