@@ -19,7 +19,7 @@ const getCategories = async (req, res = response) => {
 
 const getCategoriesById = async (req, res = response) => {
     const { id } = req.params;
-    const category = await Categorie.findById(id);
+    const category = await Categorie.findById(id).populate('user', 'name');
     res.status(200).json(category);
 };
 
@@ -53,7 +53,8 @@ const updateCategory = async (req, res = response) => {
     data.name = data.name.toUpperCase();
     data.user = req.user._id;
 
-    const category = new Categorie.findByIdAndUpdate(id, data, { new: true });
+    const category = await Categorie.findByIdAndUpdate(id, data, { new: true });
+    res.status(200).json(category);
 };
 
 const deleteCategory = async (req, res = response) => {
