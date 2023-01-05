@@ -11,7 +11,8 @@ class Server {
             users: '/api/v1/users',
             categories: '/api/v1/categories',
             products: '/api/v1/products',
-            search: '/api/v1/search'
+            search: '/api/v1/search',
+            uploads: '/api/v1/uploads'
         };
         //connecting DB
         this.connectDB();
@@ -40,6 +41,7 @@ class Server {
         this.app.use(this.paths.categories, require('../routes/categories.routes'));
         this.app.use(this.paths.products, require('../routes/products.routes'));
         this.app.use(this.paths.search, require('../routes/search.routes'));
+        this.app.use(this.paths.uploads, require('../routes/uploads.routes'));
     }
 
     listen() {
