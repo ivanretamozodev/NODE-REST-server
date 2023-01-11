@@ -59,7 +59,48 @@ const updateImage = async (req, res = response) => {
     res.status(200).json(model);
 };
 
+const showImages = async (req, res = response) => {
+    const { colection, id } = req.params;
+
+    let model;
+    switch (colection) {
+        case 'users':
+            model = await User.findById(id);
+            if (!model) {
+                return res.status(400).json({
+                    message: 'the user id not exists'
+                });
+            }
+            break;
+        case 'products':
+            model = await Product.findById(id);
+            if (!model) {
+                return res.status(400).json({
+                    message: 'the product id not exists'
+                });
+            }
+            break;
+        default:
+            res.status(500).json({
+                message: 'talk with admin'
+            });
+    }
+    //clean image in server
+    if (model.image) {
+        const pathImage = path.join(__dirname, '../uploads', colection, model.image);
+        //if exist,image is deleted
+        if (fs.existsSync(pathImage)) {
+            return res.sendFile(pathImage);
+        }
+    }
+
+    const notFoundImage = path.join(__dirname, '../assets/not_found_image.jpg');
+
+    res.sendFile(notFoundImage);
+};
+
 module.exports = {
     uploadFiles,
-    updateImage
+    updateImage,
+    showImages
 };

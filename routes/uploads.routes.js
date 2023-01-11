@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
-const { uploadFiles, updateImage } = require('../controllers/uploads.controller');
+const { uploadFiles, updateImage, showImages } = require('../controllers/uploads.controller');
 const { validColections } = require('../helpers');
 const { validateFields, validateFile } = require('../middlewares');
 
@@ -17,6 +17,16 @@ router.put(
         validateFields
     ],
     updateImage
+);
+
+router.get(
+    '/:colection/:id',
+    [
+        check('id', 'the id is not correct').isMongoId(),
+        check('colection').custom((c) => validColections(c, ['users', 'products'])),
+        validateFields
+    ],
+    showImages
 );
 
 module.exports = router;
